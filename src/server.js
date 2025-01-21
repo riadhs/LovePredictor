@@ -1,11 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 const app = express();
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set('view engine', 'ejs'); // Set EJS as the templating engine
+app.set('view engine', 'ejs');  // Set EJS as the templating engine
+app.set('views', path.join(__dirname, 'views'));  // Specify the views directory (optional)
 
 // MongoDB setup
 mongoose.connect('mongodb://localhost:27017/textSubmissionDB', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -21,10 +23,14 @@ const textSchema = new mongoose.Schema({
 const Text = mongoose.model('Text', textSchema);
 
 // Routes
-// Render form page
+// Define a route to render the template
 app.get('/', (req, res) => {
-  res.render('index');
-});
+    // Define the placeholder text to be used in the textarea
+    const placeholderText = 'Write your custom text here...';
+    
+    // Render the EJS template and pass the placeholderText to it
+    res.render('index', { placeholderText });
+  });
 
 // Handle form submission
 app.post('/submit', (req, res) => {
@@ -60,7 +66,13 @@ app.get('/analyze', (req, res) => {
 });
 
 // Start the server
-const PORT = 3000;
+const PORT = process.env.PORT || 3001;  // Default to 3001 if 3000 is taken
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
+}).on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`Port ${PORT} is already in use. Try another port.`);
+  } else {
+    console.error('Error starting server:', err);
+  }
 });
