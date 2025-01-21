@@ -53,7 +53,7 @@ app.post('/submit', (req, res) => {
 
 // Success page after form submission
 app.get('/success', (req, res) => {
-  res.render('success'); // You should create a 'success.ejs' page
+  res.render('success'); 
 });
 
 // Analyze the text (example route to process data)
