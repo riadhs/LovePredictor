@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Submission</title>
+</head>
+<body>
+  <h1>Submit Your Text</h1>
+  <form action="/submit" method="POST">
+    <textarea name="textContent" rows="5" cols="50" placeholder="Write your text here..." required></textarea><br>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Submission</title>
+</head>
+<body>
+  <h1>Submit Your Text</h1>
+  <form action="/submit" method="POST">
+    <textarea name="textContent" rows="5" cols="50" placeholder="<%= placeholderText %>" required></textarea><br>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>
