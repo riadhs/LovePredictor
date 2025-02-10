@@ -3,9 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
-
-// Middleware to serve static files from the "public" directory (for CSS and other static files)
-app.use(express.static(path.join(__dirname, 'public')));
+const { spawn } = require('child_process');
 
 // Middleware for parsing form data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,36 +39,38 @@ app.post('/submit', (req, res) => {
     content: req.body.textContent
   });
 
+  // Save the new text to the database
   newText.save()
     .then(() => {
-      res.redirect('/success'); // Redirect to a success page after saving
+      // Data to send to Python script (the text inputted by the user)
+      const data = { text: req.body.textContent };
+      
+      // Spawn the Python process to run the Python script (dataModel.py)
+      const pythonProcess = spawn('python', ['src/dataModel.py', JSON.stringify(data)]);
+
+      // Handle the data output from the Python script
+      pythonProcess.stdout.on('data', (data) => {
+        // Pass the result to the result page
+        const loveScore = data.toString().trim(); // Extract and clean up the result
+        res.render('result', { loveScore });
+      });
+
+      // Handle errors in the Python process
+      pythonProcess.stderr.on('data', (data) => {
+        console.error(`Python error: ${data.toString()}`);
+        res.send('There was an error processing your text.');
+      });
+
     })
     .catch((err) => {
-      res.send('Error saving text to the database.');
+      res.send('Error !!!');
       console.log(err);
     });
-});
-
-// Success page after form submission
-app.get('/success', (req, res) => {
-  res.render('success'); 
 });
 
 // Analyze the text (example route to process data)
-app.get('/analyze', (req, res) => {
-  Text.find()
-    .then((texts) => {
-      // Simple analysis: count number of texts submitted
-      const analysis = {
-        totalTexts: texts.length,
-        lastSubmitted: texts[texts.length - 1]
-      };
-      res.json(analysis);
-    })
-    .catch((err) => {
-      res.send('Error retrieving texts for analysis.');
-      console.log(err);
-    });
+app.get('/result', (req, res) => {
+  res.render('result', { loveScore: 'No score yet' });  // Default message if no data
 });
 
 // Start the server
