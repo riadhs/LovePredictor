@@ -51,8 +51,26 @@ app.post('/submit', (req, res) => {
       // Handle the data output from the Python script
       pythonProcess.stdout.on('data', (data) => {
         // Pass the result to the result page
-        const loveScore = data.toString().trim(); // Extract and clean up the result
+         const loveScore = data.toString().trim(); // Extract and clean up the result
         res.render('result', { loveScore });
+  //       const loveScore = 85; // Example variable
+  // let moodClass, moodText, backgroundImage;
+
+  // if (loveScore > 80) {
+  //   moodClass = 'happy';
+  //   moodText = 'You are in a Happy Mood!';
+  //   backgroundImage = 'src/p.jpg'; // Replace with actual image URL
+  // } else if (loveScore < 50) {
+  //   moodClass = 'sad';
+  //   moodText = 'You are in a Sad Mood.';
+  //   backgroundImage = 'https://example.com/sad-background.jpg'; // Replace with actual image URL
+  // } else {
+  //   moodClass = 'normal';
+  //   moodText = 'You are in a Normal Mood.';
+  //   backgroundImage = 'https://example.com/normal-background.jpg'; // Replace with actual image URL
+  // }
+
+  // res.render('result', { loveScore, moodClass, moodText, backgroundImage });
       });
 
       // Handle errors in the Python process

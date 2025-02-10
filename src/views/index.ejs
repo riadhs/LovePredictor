@@ -3,18 +3,157 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Text Submission</title>
+  <title>Love Measurement</title> <!-- Updated title here -->
   <link rel="stylesheet" href="/styles.css">
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #ff6f61, #ffcc00);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      animation: fadeIn 2s ease-out;
+    }
+
+    /* Enhanced "Love Measurement" name styling */
+    .app-name {
+      font-size: 4rem; /* Larger font size for emphasis */
+      color: #fff;
+      margin-bottom: 20px;
+      padding: 15px 30px;
+      background-color: #ff1493; /* Bright background to highlight */
+      border-radius: 20px;
+      text-transform: uppercase;
+      font-weight: bold;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+      animation: slideIn 2s ease-out;
+      letter-spacing: 5px;
+    }
+
+    /* Heading style with animation */
+    h1 {
+      font-size: 3rem;
+      color: #fff;
+      margin-bottom: 30px;
+      animation: slideIn 1.5s ease-out;
+    }
+
+    /* Fade-in keyframe for body */
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* Slide-in animation for heading */
+    @keyframes slideIn {
+      0% { transform: translateY(-50px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Form container style */
+    form {
+      background: rgba(255, 255, 255, 0.7);
+      padding: 20px 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+      animation: fadeInUp 2s ease-in-out;
+    }
+
+    /* Fade-in-up form animation */
+    @keyframes fadeInUp {
+      0% { transform: translateY(50px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Textarea style */
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1.2rem;
+      resize: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      background-color: #fff;
+      color: #333;
+    }
+
+    /* Textarea hover effect */
+    textarea:focus {
+      outline: none;
+      border: 2px solid #ff6f61;
+      box-shadow: 0 4px 10px rgba(255, 111, 97, 0.6);
+    }
+
+    /* Button style */
+    button {
+      padding: 15px 30px;
+      border: none;
+      border-radius: 50px;
+      background-color: #ff6f61;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(255, 111, 97, 0.3);
+    }
+
+    /* Button hover effect */
+    button:hover {
+      background-color: #ffcc00;
+      transform: scale(1.05);
+    }
+
+    /* Add glow effect when hovering */
+    button:active {
+      box-shadow: 0 8px 15px rgba(255, 255, 255, 0.6);
+    }
+
+    /* Placeholder animation */
+    textarea::placeholder {
+      font-style: italic;
+      color: #666;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Responsive design */
+    @media (max-width: 600px) {
+      .app-name {
+        font-size: 3rem; /* Smaller font size for smaller screens */
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      textarea {
+        width: 90%;
+      }
+      button {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="app-name">Love Measurement</div> <!-- Updated app name style here -->
   <h1>Submit Your Text</h1>
   <form action="/submit" method="POST">
     <textarea name="textContent" rows="5" cols="50" placeholder="<%= placeholderText %>" required></textarea><br>
     <button type="submit">Submit</button>
   </form>
-  <!-- <form action="/analyze" method="GET">
-    <textarea name="text" placeholder="Write your text here..."></textarea>
-    <button type="submit">Analyze Love Score</button>
-  </form> -->
 </body>
 </html>
