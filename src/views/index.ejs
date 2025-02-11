@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Love Measurement</title> <!-- Updated title here -->
-  <link rel="stylesheet" href="/styles.css">
+  <title>Love Measurement</title>
   <style>
     /* Basic Reset */
     * {
@@ -24,30 +23,50 @@
       color: white;
       text-align: center;
       animation: fadeIn 2s ease-out;
+      position: relative; /* Ensure the love signs appear behind content */
+      overflow: hidden;
     }
 
-    /* Enhanced "Love Measurement" name styling */
-    .app-name {
-      font-size: 4rem; /* Larger font size for emphasis */
-      color: #fff;
-      margin-bottom: 20px;
-      padding: 15px 30px;
-      background-color: #ff1493; /* Bright background to highlight */
-      border-radius: 20px;
-      text-transform: uppercase;
-      font-weight: bold;
-      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
-      animation: slideIn 2s ease-out;
-      letter-spacing: 5px;
-    }
-
-    /* Heading style with animation */
-    h1 {
+    /* Love sign creation with shiny red color */
+    .heart {
+      position: absolute;
       font-size: 3rem;
-      color: #fff;
-      margin-bottom: 30px;
-      animation: slideIn 1.5s ease-out;
+      color: #ff0044;
+      animation: loveSign 5s infinite alternate;
+      opacity: 0.8;
     }
+
+    @keyframes loveSign {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(20px, 20px) scale(1.3);
+        opacity: 0.5;
+      }
+    }
+
+    .app-name {
+  font-size: 4rem;
+  color: #fff;
+  margin-bottom: 1in; /* 1 inch gap between app name and next element */
+  padding: 15px 30px;
+  background-color: #ff1493;
+  border-radius: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+  animation: slideIn 2s ease-out;
+  letter-spacing: 5px;
+}
+
+h1 {
+  font-size: 3rem;
+  color: #fff;
+  margin-bottom: 1in; /* 1 inch gap between heading and form */
+  animation: slideIn 1.5s ease-out;
+}
 
     /* Fade-in keyframe for body */
     @keyframes fadeIn {
@@ -78,19 +97,20 @@
 
     /* Textarea style */
     textarea {
-      width: 100%;
-      height: 150px;
-      margin-bottom: 20px;
-      padding: 15px;
-      border-radius: 10px;
-      border: none;
-      font-size: 1.2rem;
-      resize: none;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-      background-color: #fff;
-      color: #333;
-    }
+  width: 100%; /* Keep full width */
+  height: 300px; /* Double the current height */
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1.2rem;
+  resize: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  background-color: #fff;
+  color: #333;
+}
+
 
     /* Textarea hover effect */
     textarea:focus {
@@ -149,11 +169,37 @@
   </style>
 </head>
 <body>
-  <div class="app-name">Love Measurement</div> <!-- Updated app name style here -->
+  <div class="app-name">Love Measurement</div>
   <h1>Submit Your Text</h1>
   <form action="/submit" method="POST">
-    <textarea name="textContent" rows="5" cols="50" placeholder="<%= placeholderText %>" required></textarea><br>
+    <textarea name="textContent" rows="5" cols="50" placeholder="Share your feelings..." required></textarea><br>
     <button type="submit">Submit</button>
   </form>
+
+  <script>
+    // Function to generate random positions and create hearts
+    function generateHearts(numHearts) {
+      for (let i = 0; i < numHearts; i++) {
+        let heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.textContent = "💖";
+
+        // Random positions for each heart
+        const xPos = Math.random() * window.innerWidth;
+        const yPos = Math.random() * window.innerHeight;
+        const animationDuration = Math.random() * (7 - 5) + 5; // Randomize animation time between 5s and 7s
+
+        heart.style.left = `${xPos}px`;
+        heart.style.top = `${yPos}px`;
+        heart.style.animationDuration = `${animationDuration}s`;
+
+        // Append the heart to the body
+        document.body.appendChild(heart);
+      }
+    }
+
+    // Generate 100 hearts
+    generateHearts(50);
+  </script>
 </body>
 </html>
