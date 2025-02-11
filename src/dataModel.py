@@ -42,4 +42,4 @@ else:
 
 # Make a prediction
 predicted_love_score = model.predict(text)
-print(f"Predicted love score for the text '{text[0]}': {predicted_love_score[0]}")
+print(f"{predicted_love_score[0]}")

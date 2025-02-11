@@ -51,7 +51,7 @@ app.post('/submit', (req, res) => {
       // Handle the data output from the Python script
       pythonProcess.stdout.on('data', (data) => {
         // Pass the result to the result page
-         const loveScore = data.toString().trim(); // Extract and clean up the result
+         const loveScore = data; // Extract and clean up the result
         res.render('result', { loveScore });
       });
 

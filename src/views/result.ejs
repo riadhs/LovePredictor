@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Love Measurement</title>
-  <link rel="stylesheet" href="/styles.css"> <!-- Link to the CSS file -->
+  <link rel="stylesheet" href="/styles.css">
   <style>
     /* Basic Reset */
     * {
@@ -61,7 +61,7 @@
       padding: 20px 40px;
       border-radius: 10px;
       background-color: #ff1493;
-      margin-bottom: 20px;
+      margin-bottom: 1in; /* 1 inch space between score and message */
       box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
     }
 
@@ -82,10 +82,70 @@
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(255, 111, 97, 0.3);
       transition: all 0.3s ease;
+      margin-top: 1in; /* 1 inch space from message */
     }
 
     button:hover {
       background-color: #ffcc00;
+    }
+
+    /* Blinking effect for message */
+    .message {
+      font-size: 3rem; /* Increased font size */
+      font-weight: bold;
+      color: white;
+      margin-top: 20px;
+      animation: blink 1.5s infinite step-start;
+      margin-bottom: 1in; /* 1 inch space between message and button */
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* Balloon Floating Effect */
+    @keyframes balloonFloat {
+      0% {
+        transform: translateY(100vh); /* Start at the bottom of the viewport */
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh); /* Move upwards off the screen */
+        opacity: 0;
+      }
+    }
+
+    /* Balloon Style */
+    .balloon {
+      position: absolute;
+      font-size: 4rem; /* Increased size of the balloons */
+      animation: balloonFloat 5s linear infinite; /* 5 seconds animation, infinite loop */
+      animation-delay: calc(0s + (0.5s * var(--i))); /* Staggered start time */
+      text-shadow: 0 0 10px #ffcc00, 0 0 20px #ff1493, 0 0 30px #ff6f61; /* Shimmer effect */
+    }
+
+    /* Left-side Balloons */
+    .balloon.left {
+      left: 10%; /* Position balloons from the left side */
+    }
+
+    /* Right-side Balloons */
+    .balloon.right {
+      right: 10%; /* Position balloons from the right side */
+    }
+
+    /* Add more balloons with different colors */
+    .balloon:nth-child(odd) {
+      color: #ff1493;
+    }
+
+    .balloon:nth-child(even) {
+      color: #ffcc00;
     }
 
     /* Responsive design for smaller screens */
@@ -101,31 +161,69 @@
 </head>
 <body>
   <div class="score">
-    Love Score: <%= loveScore %>
+    Text Analysis Score: <%= loveScore %>
   </div>
 
   <!-- Conditional Content Based on loveScore -->
   <% if (loveScore > 80) { %>
     <!-- Heart Effect for scores above 80 -->
+    <div class="message">
+      <p>This text is incredibly heartfelt and full of love!</p>
+    </div>
     <div class="effect">
       💖💖
     </div>
   <% } else if (loveScore > 50) { %>
     <!-- Clap Effect for scores between 51 and 80 -->
+    <div class="message">
+      <p>This text strikes a perfect balance: a blend of love and friendship!</p>
+    </div>
     <div class="effect">
       👏👏
     </div>
-  <% } else { %>
-    <!-- Handshake Effect for scores 50 and below -->
+  <% } else if (loveScore > 10) { %>
+    <!-- Handshake Effect for scores between 50 and 10 -->
+    <div class="message">
+      <p>This is a laid-back, easygoing text!</p>
+    </div>
     <div class="effect">
       🤝🤝
     </div>
+  <% }else { %>
+    <!-- Sad Effect for scores 10 and below-->
+    <div class="message">
+      <p>Not enough text!</p>
+    </div>
+    <div class="effect">
+      😞😞
+    </div> 
   <% } %>
 
   <!-- Button to go back to home -->
   <button onclick="goHome()">Back to Home</button>
 
+  <!-- Balloons Script -->
   <script>
+    // Function to generate balloons and animate them
+    function createBalloons() {
+      for (let i = 0; i < 5; i++) { // Number of balloons to create
+        let balloonLeft = document.createElement('div');
+        balloonLeft.classList.add('balloon', 'left');
+        balloonLeft.style.setProperty('--i', i); // Custom property to stagger the animations
+        balloonLeft.textContent = '🎈'; // Balloon emoji
+        document.body.appendChild(balloonLeft);
+
+        let balloonRight = document.createElement('div');
+        balloonRight.classList.add('balloon', 'right');
+        balloonRight.style.setProperty('--i', i); // Custom property to stagger the animations
+        balloonRight.textContent = '🎈'; // Balloon emoji
+        document.body.appendChild(balloonRight);
+      }
+    }
+
+    // Call the function when the page loads
+    window.onload = createBalloons;
+
     // JavaScript function to redirect to home
     function goHome() {
       window.location.href = '/'; // Redirects to the home page (root URL)
