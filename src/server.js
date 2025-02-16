@@ -4,16 +4,19 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 const { spawn } = require('child_process');
-
+require('dotenv').config();
+  
 // Middleware for parsing form data
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views')); // Specify the views directory
+app.set('views', path.join(__dirname, 'views')); 
 
-// MongoDB setup
-mongoose.connect('mongodb://localhost:27017/textSubmissionDB')
+const dbURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster1.p6uuq.mongodb.net/myDatabaseName?retryWrites=true&w=majority`;
+
+mongoose.connect(dbURI)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.log('MongoDB connection error: ', err));
 
@@ -25,7 +28,6 @@ const textSchema = new mongoose.Schema({
 
 const Text = mongoose.model('Text', textSchema);
 
-// Routes
 
 // Define a route to render the template
 app.get('/', (req, res) => {
