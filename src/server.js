@@ -14,8 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views')); 
 
-// const dbURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster1.p6uuq.mongodb.net/myDatabaseName?retryWrites=true&w=majority`;
-const dbURI = "mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster1.p6uuq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1";
+ const dbURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster1.p6uuq.mongodb.net/myDatabaseName?retryWrites=true&w=majority`;
+// const dbURI = "mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster1.p6uuq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1";
 
 mongoose.connect(dbURI)
   .then(() => console.log('Connected to MongoDB'))
