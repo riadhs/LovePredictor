@@ -4,16 +4,22 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.pipeline import make_pipeline
-import nltk
 from nltk.corpus import stopwords
 import sys
 import json
+import os
+import nltk
 
-# Automatically download stopwords if not available
-try:
-    stopwords.words('english')
-except LookupError:
-    nltk.download('stopwords')
+# # Automatically download stopwords if not available
+# try:
+#     stopwords.words('english')
+# except LookupError:
+#     nltk.download('stopwords')
+
+nltk_data_dir = os.getenv('NLTK_DATA', '/opt/render/project/src/nltk_data')
+if not os.path.exists(nltk_data_dir):
+    os.makedirs(nltk_data_dir)
+nltk.data.path.append(nltk_data_dir)
 
 # Replace 'your_file.xlsx' with the path to your Excel file
 df = pd.read_excel('src/love_data.xlsx', sheet_name='Sheet1') 
