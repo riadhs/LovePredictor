@@ -31,7 +31,12 @@ y_train = df['love_score']
 
 # Use TfidfVectorizer to convert text to numeric features
 # vectorizer = TfidfVectorizer(stop_words=stopwords.words('english'))
-vectorizer = TfidfVectorizer(stop_words=ENGLISH_STOP_WORDS)
+# vectorizer = TfidfVectorizer(stop_words=ENGLISH_STOP_WORDS)
+# Convert ENGLISH_STOP_WORDS from frozenset to a list
+stop_words_list = list(ENGLISH_STOP_WORDS)
+
+# Use TfidfVectorizer to convert text to numeric features (using sklearn's ENGLISH_STOP_WORDS as a list)
+vectorizer = TfidfVectorizer(stop_words=stop_words_list)
 
 # Create a model pipeline with TF-IDF Vectorizer and Random Forest Regressor
 model = make_pipeline(vectorizer, RandomForestRegressor(n_estimators=100))
@@ -51,3 +56,4 @@ else:
 # Make a prediction
 predicted_love_score = model.predict(text)
 print(f"{predicted_love_score[0]}")
+ 
