@@ -11,16 +11,6 @@ import json
 import os
 import nltk
 
-# # Automatically download stopwords if not available
-# try:
-#     stopwords.words('english')
-# except LookupError:
-#     nltk.download('stopwords')
-
-# nltk_data_dir = os.getenv('NLTK_DATA', '/opt/render/project/src/nltk_data')
-# if not os.path.exists(nltk_data_dir):
-#     os.makedirs(nltk_data_dir)
-# nltk.data.path.append(nltk_data_dir)
 
 # Replace 'your_file.xlsx' with the path to your Excel file
 df = pd.read_excel('src/love_data.xlsx', sheet_name='Sheet1') 
@@ -29,9 +19,6 @@ df = pd.read_excel('src/love_data.xlsx', sheet_name='Sheet1')
 X_train = df['text']
 y_train = df['love_score']
 
-# Use TfidfVectorizer to convert text to numeric features
-# vectorizer = TfidfVectorizer(stop_words=stopwords.words('english'))
-# vectorizer = TfidfVectorizer(stop_words=ENGLISH_STOP_WORDS)
 # Convert ENGLISH_STOP_WORDS from frozenset to a list
 stop_words_list = list(ENGLISH_STOP_WORDS)
 
